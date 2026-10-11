@@ -131,7 +131,7 @@
   function niceMax(v) { var s = [1, 2, 2.5, 5, 10], p = Math.pow(10, Math.floor(Math.log10(v))); for (var i = 0; i < s.length; i++) if (s[i] * p >= v) return s[i] * p; return 10 * p; }
   function lineChart(box, opt) {
     box.textContent = ''; var W = Math.max(300, box.clientWidth || 600), H = Math.round(Math.min(340, Math.max(220, W * .5)));
-    var L = 46, R = 104, T = 12, B = 40, pw = W - L - R, ph = H - T - B, n = opt.x.length;
+    var L = 46, R = 88, T = 12, B = 40, pw = W - L - R, ph = H - T - B, n = opt.x.length;
     var vals = [].concat.apply([], opt.series.map(function (s) { return s.vals.filter(function (v) { return v != null; }); }));
     var lo = opt.min != null ? opt.min : 0, hi = opt.max != null ? opt.max : niceMax(Math.max.apply(null, vals) * 1.05), step = opt.step || (hi - lo) / 4;
     var X = function (i) { return L + pw * i / (n - 1); }, Y = function (v) { return T + ph * (1 - (v - lo) / (hi - lo)); };
@@ -148,8 +148,8 @@
       if (s.vals[li] != null) ends.push({ y: Y(s.vals[li]), name: s.short || s.name, v: s.vals[li], x: X(li) });
     });
     ends.sort(function (a, b) { return a.y - b.y; });
-    for (var i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 14) ends[i].y = ends[i - 1].y + 14;
-    ends.forEach(function (e) { svg.appendChild(sv('text', { x: e.x + 10, y: e.y + 4, style: 'fill:var(--ink);font-weight:600;font-size:14px' }, e.name + ' ' + opt.fmt(e.v))); });
+    for (var i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 12) ends[i].y = ends[i - 1].y + 12;
+    ends.forEach(function (e) { svg.appendChild(sv('text', { x: e.x + 10, y: e.y + 4, style: 'fill:var(--ink);font-weight:600;font-size:11px' }, e.name + ' ' + opt.fmt(e.v))); });
     // hover
     var cross = sv('line', { y1: T, y2: T + ph, stroke: css('--ink3'), 'stroke-dasharray': '3 3', opacity: 0 }); svg.appendChild(cross);
     var hit = sv('rect', { x: L, y: T, width: pw, height: ph, fill: 'transparent' }); svg.appendChild(hit);
@@ -160,6 +160,7 @@
       showTip(ev, [opt.x[i]].concat(rows));
     });
     hit.addEventListener('mouseleave', function () { cross.setAttribute('opacity', 0); hideTip(); });
+    Array.prototype.forEach.call(svg.querySelectorAll('text'), function (t) { t.style.fontSize = '11px'; });
     box.appendChild(svg);
   }
   function legendFor(box, series) {
