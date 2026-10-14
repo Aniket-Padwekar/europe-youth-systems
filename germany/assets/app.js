@@ -81,16 +81,16 @@
   }
   function render() { var R = compute(); if (S.sel && !R.items.some(function (x) { return x.k === S.sel; })) S.sel = null; renderSide(R); drawMap(R); renderLede(R); }
   function renderLede(R) {
-    $('#yrn').textContent = R.P.length.toLocaleString('en-US') + ' of ' + D.pool.n.toLocaleString('en-US') + ' players' + (S.yr === 1990 ? ' (includes those who had already debuted)' : '');
+    if ($('#yrn')) $('#yrn').textContent = R.P.length.toLocaleString('en-US') + ' of ' + D.pool.n.toLocaleString('en-US') + ' players' + (S.yr === 1990 ? ' (includes those who had already debuted)' : '');
     $('#lede').textContent = D.pool.n.toLocaleString('en-US') + ' players born in Germany, with a real career in a Big-5 league from the 1990s to 2026. The map shows the German club that developed each one. Move the slider to see the talent build up by first appearance. Click a circle or a name for the player.';
   }
   function bind() {
-    $('#updated').textContent = D.updated;
+    if ($('#updated')) $('#updated').textContent = D.updated;
     document.querySelectorAll('[data-grp]').forEach(function (b) { b.onclick = function () { S.grp = b.dataset.grp; S.sel = null; document.querySelectorAll('[data-grp]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); render(); }; });
     document.querySelectorAll('[data-view]').forEach(function (b) { b.onclick = function () { S.view = b.dataset.view; S.sel = null; document.querySelectorAll('[data-view]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); render(); }; });
     document.querySelectorAll('#measure button').forEach(function (b) { b.onclick = function () { S.m = b.dataset.m; document.querySelectorAll('#measure button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); render(); }; });
     var yr = $('#yr');
-    yr.oninput = function () { S.yr = +yr.value; S.sel = null; $('#yrv').textContent = S.yr; yr.setAttribute('aria-valuetext', 'First appearance up to ' + S.yr); render(); };
+    if (yr) yr.oninput = function () { S.yr = +yr.value; S.sel = null; $('#yrv').textContent = S.yr; yr.setAttribute('aria-valuetext', 'First appearance up to ' + S.yr); render(); };
     $('#moreBtn').onclick = function () { S.all = !S.all; render(); };
     $('#cclose').onclick = function () { var d = $('#card'); d.close ? d.close() : d.removeAttribute('open'); };
     $('#card').addEventListener('click', function (e) { if (e.target === this) this.close(); });
