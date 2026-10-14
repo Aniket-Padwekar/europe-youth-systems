@@ -145,3 +145,8 @@ footer .sources b{color:var(--ink2)}
 #map{background:var(--bg)}
 .leaflet-container{background:var(--bg)}
 path.deland{fill:var(--panel);stroke:var(--ink3);stroke-opacity:.55}
+
+.yr{min-width:min(100%,280px);font-size:14px;color:var(--ink2)}.yr label{display:block;margin-bottom:4px}.yr b{color:var(--ink);font-size:18px}
+.yrrow{display:flex;align-items:center;gap:10px}.yr input[type=range]{flex:1;accent-color:var(--accent);height:28px;cursor:pointer}.yrn{display:block;margin-top:2px;font-size:13px;color:var(--ink3)}
+
+.top h1.long{font-size:clamp(24px,3vw,36px);max-width:34ch;line-height:1.08}.yr input[type=range]{width:100%}

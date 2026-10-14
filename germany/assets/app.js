@@ -2,7 +2,7 @@
   'use strict';
   var D = window.GT, $ = function (s, r) { return (r || document).querySelector(s); };
   var HOVER = window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
-  var S = { grp: 'all', m: 'last', era: 'all', view: 'club', sel: null, all: false };
+  var S = { grp: 'all', m: 'last', yr: 2026, view: 'club', sel: null, all: false };
   var CLS = ['Bundesliga only (Big-5 data)', 'Bundesliga and another Big-5 league', 'Only outside the Bundesliga', ''];
   var SRC = ['Wikipedia', 'Transfermarkt', 'Wikipedia and Transfermarkt', ''];
   var cityPos = {}; (function () { var t = {}; D.clubs.forEach(function (c) { (t[c.city] = t[c.city] || []).push(c); }); Object.keys(t).forEach(function (k) { var a = t[k]; cityPos[k] = [a.reduce(function (s, c) { return s + c.lat; }, 0) / a.length, a.reduce(function (s, c) { return s + c.lon; }, 0) / a.length]; }); })();
@@ -10,7 +10,7 @@
   var ESRI = 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/';
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function median(a) { if (!a.length) return 0; a = a.slice().sort(function (x, y) { return x - y; }); var h = a.length >> 1; return a.length % 2 ? a[h] : (a[h - 1] + a[h]) / 2; }
-  function inEra(p) { var y = p[1]; return S.era === 'all' || (S.era === '65' && y < 1975) || (S.era === '75' && y >= 1975 && y < 1985) || (S.era === '85' && y >= 1985 && y < 1990) || (S.era === '90' && y >= 1990 && y < 1995) || (S.era === '95' && y >= 1995 && y < 2000) || (S.era === '00' && y >= 2000); }
+  function inEra(p) { return p[12] <= S.yr; }
   function pool() { return D.players.filter(function (p) { return (S.grp === 'all' || p[8] === S.grp) && inEra(p); }); }
   function credits(p) { var y = p[3]; if (!y.length) return p[9] >= 0 ? [p[9]] : []; if (S.m === 'last') return [y[y.length - 1]]; if (S.m === 'first') return [y[0]]; var o = []; y.forEach(function (i) { if (o.indexOf(i) < 0) o.push(i); }); return o; }
   function keyOf(i) { return S.view === 'city' ? D.clubs[i].city : D.clubs[i].n; }
@@ -81,14 +81,16 @@
   }
   function render() { var R = compute(); if (S.sel && !R.items.some(function (x) { return x.k === S.sel; })) S.sel = null; renderSide(R); drawMap(R); renderLede(R); }
   function renderLede(R) {
-    $('#lede').textContent = D.pool.n + ' players born in Germany, mostly trained here, with a real career in a Big-5 league from the 1990s to 2026. The map shows the German pro club that developed each one. Click a circle or a name for the player.';
+    $('#yrn').textContent = R.P.length.toLocaleString('en-US') + ' of ' + D.pool.n.toLocaleString('en-US') + ' players' + (S.yr === 1990 ? ' (includes those who had already debuted)' : '');
+    $('#lede').textContent = D.pool.n.toLocaleString('en-US') + ' players born in Germany, with a real career in a Big-5 league from the 1990s to 2026. The map shows the German club that developed each one. Move the slider to see the talent build up by first appearance. Click a circle or a name for the player.';
   }
   function bind() {
     $('#updated').textContent = D.updated;
     document.querySelectorAll('[data-grp]').forEach(function (b) { b.onclick = function () { S.grp = b.dataset.grp; S.sel = null; document.querySelectorAll('[data-grp]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); render(); }; });
     document.querySelectorAll('[data-view]').forEach(function (b) { b.onclick = function () { S.view = b.dataset.view; S.sel = null; document.querySelectorAll('[data-view]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); render(); }; });
     document.querySelectorAll('#measure button').forEach(function (b) { b.onclick = function () { S.m = b.dataset.m; document.querySelectorAll('#measure button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); render(); }; });
-    $('#era').onchange = function (e) { S.era = e.target.value; S.sel = null; render(); };
+    var yr = $('#yr');
+    yr.oninput = function () { S.yr = +yr.value; S.sel = null; $('#yrv').textContent = S.yr; yr.setAttribute('aria-valuetext', 'First appearance up to ' + S.yr); render(); };
     $('#moreBtn').onclick = function () { S.all = !S.all; render(); };
     $('#cclose').onclick = function () { var d = $('#card'); d.close ? d.close() : d.removeAttribute('open'); };
     $('#card').addEventListener('click', function (e) { if (e.target === this) this.close(); });
