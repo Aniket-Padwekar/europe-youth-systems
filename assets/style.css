@@ -137,4 +137,4 @@ footer .sources b{color:var(--ink2)}
 .tabs button{background:transparent;border:0;border-bottom:3px solid transparent;padding:10px 14px;font:600 15px "Public Sans",system-ui,sans-serif;color:var(--ink2);cursor:pointer;margin-bottom:-1px}
 .tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
 #paneDe[hidden],#paneEu[hidden]{display:none}
-#deFrame{display:block;width:100%;height:1500px;border:0;background:var(--bg)}
+#deFrame{display:block;width:100%;height:calc(100vh - 52px);height:calc(100dvh - 52px);min-height:520px;border:0;background:var(--bg)}

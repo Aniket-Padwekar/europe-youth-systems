@@ -5,7 +5,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,700..900&family=Public+Sans:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="vendor/leaflet.css">
-<link rel="stylesheet" href="assets/style.css?v=7"></head>
+<link rel="stylesheet" href="assets/style.css?v=8"></head>
 <body>
 <nav class="tabs" role="tablist" aria-label="Dashboards"><button role="tab" id="tabEu" aria-selected="true" aria-controls="paneEu" type="button">Europe</button><button role="tab" id="tabDe" aria-selected="false" aria-controls="paneDe" type="button">Germany: home-grown talent</button></nav>
 <div id="paneEu" role="tabpanel" aria-labelledby="tabEu">
@@ -69,7 +69,7 @@
 <script>(function(){var eu=document.getElementById('paneEu'),de=document.getElementById('paneDe'),te=document.getElementById('tabEu'),td=document.getElementById('tabDe'),fr=document.getElementById('deFrame');
 function show(w){var d=w==='de';eu.hidden=d;de.hidden=!d;te.setAttribute('aria-selected',!d);td.setAttribute('aria-selected',d);if(d&&!fr.src)fr.src=fr.dataset.src;try{history.replaceState(null,'',d?'#germany':location.pathname+location.search)}catch(e){}window.scrollTo(0,0);setTimeout(function(){window.dispatchEvent(new Event('resize'))},50)}
 te.onclick=function(){show('eu')};td.onclick=function(){show('de')};
-window.addEventListener('message',function(e){if(e.source===fr.contentWindow&&e.data&&e.data.gtHeight)fr.style.height=e.data.gtHeight+'px'});
+
 if(location.hash==='#germany')show('de')})();</script>
 <script src="vendor/leaflet.js"></script><script src="assets/data.js?v=6"></script><script src="assets/flags.js?v=6"></script><script src="assets/geo.js?v=6"></script><script src="assets/app.js?v=6"></script>
 </body></html>

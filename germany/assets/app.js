@@ -10,7 +10,7 @@
   var ESRI = 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/';
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function median(a) { if (!a.length) return 0; a = a.slice().sort(function (x, y) { return x - y; }); var h = a.length >> 1; return a.length % 2 ? a[h] : (a[h - 1] + a[h]) / 2; }
-  function inEra(p) { var y = p[1]; return S.era === 'all' || (S.era === '85' && y < 1990) || (S.era === '90' && y >= 1990 && y < 1995) || (S.era === '95' && y >= 1995 && y < 2000) || (S.era === '00' && y >= 2000); }
+  function inEra(p) { var y = p[1]; return S.era === 'all' || (S.era === '65' && y < 1975) || (S.era === '75' && y >= 1975 && y < 1985) || (S.era === '85' && y >= 1985 && y < 1990) || (S.era === '90' && y >= 1990 && y < 1995) || (S.era === '95' && y >= 1995 && y < 2000) || (S.era === '00' && y >= 2000); }
   function pool() { return D.players.filter(function (p) { return (S.grp === 'all' || p[8] === S.grp) && inEra(p); }); }
   function credits(p) { var y = p[3]; if (!y.length) return p[9] >= 0 ? [p[9]] : []; if (S.m === 'last') return [y[y.length - 1]]; if (S.m === 'first') return [y[0]]; var o = []; y.forEach(function (i) { if (o.indexOf(i) < 0) o.push(i); }); return o; }
   function keyOf(i) { return S.view === 'city' ? D.clubs[i].city : D.clubs[i].n; }
@@ -81,7 +81,7 @@
   }
   function render() { var R = compute(); if (S.sel && !R.items.some(function (x) { return x.k === S.sel; })) S.sel = null; renderSide(R); drawMap(R); renderLede(R); }
   function renderLede(R) {
-    $('#lede').textContent = D.pool.n + ' players born in Germany, mostly trained here, with a real career in a Big-5 league since 2012. The map shows the German pro club that developed each one. Click a circle or a name for the player.';
+    $('#lede').textContent = D.pool.n + ' players born in Germany, mostly trained here, with a real career in a Big-5 league from the 1990s to 2026. The map shows the German pro club that developed each one. Click a circle or a name for the player.';
   }
   function bind() {
     $('#updated').textContent = D.updated;
