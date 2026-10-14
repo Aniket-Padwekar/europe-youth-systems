@@ -150,3 +150,6 @@ path.deland{fill:var(--panel);stroke:var(--ink3);stroke-opacity:.55}
 .yrrow{display:flex;align-items:center;gap:10px}.yr input[type=range]{flex:1;accent-color:var(--accent);height:28px;cursor:pointer}.yrn{display:block;margin-top:2px;font-size:13px;color:var(--ink3)}
 
 .top h1.long{font-size:clamp(24px,3vw,36px);max-width:34ch;line-height:1.08}.yr input[type=range]{width:100%}
+
+.tools{align-items:flex-start}.yr{width:300px;max-width:100%;flex:none}.yrn{min-height:1.4em;white-space:nowrap}.yr label{white-space:nowrap}
+.top>div:first-child{flex:1 1 520px;max-width:720px}.top h1.long{max-width:none}.top .tools{flex:0 0 300px}

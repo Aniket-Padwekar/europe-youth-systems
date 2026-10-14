@@ -35,7 +35,7 @@
     layer.clearLayers();
     var col = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#0A7F5C', hl = getComputedStyle(document.documentElement).getPropertyValue('--hl').trim() || '#C4540E';
     R.items.slice().reverse().forEach(function (it) {
-      var sel = S.sel === it.k, r = 5 + Math.sqrt(it.n) * (S.view === 'city' ? 4.2 : 4.6);
+      var sel = S.sel === it.k, r = 3.5 + Math.sqrt(it.n) * (S.view === 'city' ? 2.1 : 2.5);
       var m = L.circleMarker([it.lat, it.lon], { radius: r, color: sel ? hl : '#fff', weight: sel ? 3 : 1.5, fillColor: sel ? hl : col, fillOpacity: .78 }).addTo(layer);
       var box = document.createElement('div'); box.className = 'pop';
       box.innerHTML = '<b>' + esc(it.k) + (it.city && it.city !== it.k ? ' <small>(' + esc(it.city) + ')</small>' : '') + '</b><span class="num">' + it.n + ' player' + (it.n > 1 ? 's' : '') + '</span>';
@@ -81,7 +81,7 @@
   }
   function render() { var R = compute(); if (S.sel && !R.items.some(function (x) { return x.k === S.sel; })) S.sel = null; renderSide(R); drawMap(R); renderLede(R); }
   function renderLede(R) {
-    if ($('#yrn')) $('#yrn').textContent = R.P.length.toLocaleString('en-US') + ' of ' + D.pool.n.toLocaleString('en-US') + ' players' + (S.yr === 1990 ? ' (includes those who had already debuted)' : '');
+    if ($('#yrn')) $('#yrn').textContent = R.P.length.toLocaleString('en-US') + ' of ' + D.pool.n.toLocaleString('en-US') + ' players';
     $('#lede').textContent = D.pool.n.toLocaleString('en-US') + ' players born in Germany, with a real career in a Big-5 league from the 1990s to 2026. The map shows the German club that developed each one. Move the slider to see the talent build up by first appearance. Click a circle or a name for the player.';
   }
   function bind() {
